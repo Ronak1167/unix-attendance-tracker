@@ -1,0 +1,30 @@
+====================================================================================================
+                  ACADEMIC ATTENDANCE PERFORMANCE AUDIT REPORT (BATCH B2)                           
+====================================================================================================
+S.NO  | ROLL NO      | STUDENT NAME           | TOTAL  | PRES  | ABS   | ATT %   | STATUS      
+------+--------------+------------------------+-------+-------+-------+---------+--------------
+1     | 2501030101   | Aarav Sharma           | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+2     | 2501030105   | Ananya Gupta           | 1      | 0     | 1     |   0.00% | DEFAULTER   
+3     | 2501030112   | Devansh Verma          | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+4     | 2501030118   | Ishaan Saxena          | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+5     | 2501030121   | Pragya Ahlawat         | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+6     | 2501030124   | Rohan Malhotra         | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+7     | 2501030128   | Ronak Jain             | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+8     | 2501030130   | Rishabh Tyagi          | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+9     | 2501030135   | Saanvi Agarwal         | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+10    | 2501030139   | Shivam Kapoor          | 1      | 0     | 1     |   0.00% | DEFAULTER   
+11    | 2501030144   | Shobhit Khatana        | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+12    | 2501030148   | Tanmay Bhatnagar       | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+13    | 2501030152   | Utkarsh Srivastava     | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+14    | 2501030155   | Vanshika Joshi         | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+15    | 2501030160   | Yash Vardhan           | 1      | 1     | 0     | 100.00% | ELIGIBLE    
+------+--------------+------------------------+-------+-------+-------+---------+--------------
+STATISTICAL OVERVIEW:
+  • Total Sessions Conducted : 1
+  • Total Students Evaluated : 15
+  • Class Average Attendance : 86.67%
+  • Attendance Threshold     : 75.0%
+  • Number of Defaulters     : 2 (13.3% of class)
+  • Highest Attendance       : 100.00%
+  • Lowest Attendance        : 0.00%
+====================================================================================================
