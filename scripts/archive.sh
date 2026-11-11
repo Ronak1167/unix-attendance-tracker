@@ -4,13 +4,14 @@
 # Course: Unix Programming Lab (24B15CS214) | JIIT Noida-62
 # Project: UNIX-Based Student Attendance Tracker
 # Utilizes UNIX utilities: tar, gzip, ls, find, awk, du
+# Standard Month Format: YYYY-MM (e.g., 2026-11)
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 init_system
 
-# Archive logs for a specific month (YYYYMM) using tar and gzip
+# Archive logs for a specific month (YYYY-MM or YYYYMM) using tar and gzip
 archive_logs() {
     local target_month="$1"
     local purge_originals="$2"
@@ -20,7 +21,7 @@ archive_logs() {
         # Find available months in logs directory
         local available_months
         available_months=$(find "$LOGS_DIR" -name "att_*.log" -exec basename {} \; 2>/dev/null | \
-                           sed -E 's/att_([0-9]{6})[0-9]{2}\.log/\1/' | sort -u)
+                           sed -E 's/att_([0-9]{4})-?([0-9]{2})-?[0-9]{2}\.log/\1-\2/' | sort -u)
 
         if [[ -z "$available_months" ]]; then
             log_warn "No daily logs found in $LOGS_DIR to archive."
@@ -30,19 +31,25 @@ archive_logs() {
         echo -e "${C_CYAN}Available Months with Logged Sessions:${C_RESET}"
         echo "$available_months" | awk '{printf "  • %s\n", $1}'
         echo ""
-        read -rp "Enter Month to Archive (Format: YYYYMM, e.g. $(date +%Y%m)): " target_month
+        read -rp "Enter Month to Archive (Format: YYYY-MM, e.g. $(date +%Y-%m)): " target_month
     fi
 
-    # Validate target month format (YYYYMM)
-    if [[ ! "$target_month" =~ ^[0-9]{6}$ ]]; then
-        log_error "Invalid month format: '$target_month'. Must be YYYYMM (e.g. 202611)."
+    # Normalize month format (convert YYYYMM to YYYY-MM if needed)
+    if [[ "$target_month" =~ ^[0-9]{6}$ ]]; then
+        target_month="${target_month:0:4}-${target_month:4:2}"
+    fi
+
+    # Validate target month format (YYYY-MM)
+    if [[ ! "$target_month" =~ ^[0-9]{4}-[0-9]{2}$ ]]; then
+        log_error "Invalid month format: '$target_month'. Must be YYYY-MM (e.g. $(date +%Y-%m))."
         return 1
     fi
 
-    # Locate matching files
+    # Locate matching files (att_YYYY-MM-*.log or att_YYYYMM*.log)
     cd "$LOGS_DIR" || return 1
+    local compact_month="${target_month//-/}"
     local matching_files
-    matching_files=$(ls att_${target_month}*.log 2>/dev/null)
+    matching_files=$(ls att_${target_month}*.log att_${compact_month}*.log 2>/dev/null || true)
 
     if [[ -z "$matching_files" ]]; then
         log_warn "No logs found matching month '$target_month' (att_${target_month}*.log)."
@@ -55,7 +62,7 @@ archive_logs() {
     local archive_name="attendance_archive_${target_month}.tar.gz"
     local archive_path="$ARCHIVE_DIR/$archive_name"
 
-    log_info "Found $count log files for month $target_month. Compressing with tar and gzip..."
+    log_info "Found $count log files for month $target_month at $(get_current_timestamp). Compressing with tar and gzip..."
 
     # Create compressed archive using tar -czvf
     tar -czvf "$archive_path" $matching_files >/dev/null
@@ -77,7 +84,7 @@ archive_logs() {
 
     local archive_size
     archive_size=$(du -h "$archive_path" | cut -f1)
-    log_success "Archive created successfully: $archive_path ($archive_size)"
+    log_success "Archive created successfully: $archive_path ($archive_size) at $(get_current_timestamp)."
 
     # Purge original raw files if requested or prompt
     if [[ "$purge_originals" == "purge" ]]; then
@@ -97,7 +104,7 @@ archive_logs() {
     return 0
 }
 
-# List all existing archives
+# List all existing archives with aligned borders
 list_archives() {
     print_banner "COMPRESSED ARCHIVES REPOSITORY ($ARCHIVE_DIR)"
     local archives
@@ -109,7 +116,17 @@ list_archives() {
     fi
 
     echo -e "${C_CYAN}Archive File Details:${C_RESET}"
-    ls -lh "$ARCHIVE_DIR"/*.tar.gz | awk '{printf "%-10s %-5s %-12s %s\n", $1, $5, $6" "$7, $9}'
+    printf " %-35s | %-8s | %-16s\n" "ARCHIVE FILENAME" "SIZE" "LAST MODIFIED"
+    echo "-------------------------------------+----------+------------------"
+    for arch in "$ARCHIVE_DIR"/*.tar.gz; do
+        local sz mod_dt fn
+        sz=$(du -h "$arch" | cut -f1)
+        mod_dt=$(date -r "$arch" +"%Y-%m-%d %H:%M" 2>/dev/null || stat -c "%y" "$arch" 2>/dev/null | cut -c1-16)
+        fn=$(basename "$arch")
+        printf " %-35s | %-8s | %-16s\n" "$fn" "$sz" "$mod_dt"
+    done
+    echo "-------------------------------------+----------+------------------"
+
     echo ""
     echo -e "${C_CYAN}Archive Content Inspections:${C_RESET}"
     for arch in "$ARCHIVE_DIR"/*.tar.gz; do
@@ -131,7 +148,7 @@ restore_archive() {
         fi
         echo "$archives" | awk -F'/' '{printf "  • %s\n", $NF}'
         echo ""
-        read -rp "Enter archive file name (e.g., attendance_archive_202611.tar.gz): " target_archive
+        read -rp "Enter archive file name (e.g., attendance_archive_$(date +%Y-%m).tar.gz): " target_archive
         target_archive="$ARCHIVE_DIR/$target_archive"
     fi
 
@@ -140,7 +157,7 @@ restore_archive() {
         return 1
     fi
 
-    log_info "Decompressing and extracting $(basename "$target_archive") into $LOGS_DIR..."
+    log_info "Decompressing and extracting $(basename "$target_archive") into $LOGS_DIR at $(get_current_timestamp)..."
     tar -xzvf "$target_archive" -C "$LOGS_DIR"
     log_success "Archive successfully restored to $LOGS_DIR."
 }
@@ -173,4 +190,3 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         "$@"
     fi
 fi
-

@@ -30,16 +30,16 @@ unix-attendance-tracker/
 ├── attendance.sh              # Master interactive CLI controller & argument dispatcher
 ├── data/
 │   ├── students.csv           # Master database (RollNo, Name, Batch, Email)
-│   └── current_day.log -> logs/att_YYYYMMDD.log  # Symbolic link (ln -sf) to active session
+│   └── current_day.log -> logs/att_YYYY-MM-DD.log  # Symbolic link (ln -sf) to active session
 ├── logs/
-│   ├── att_20261101.log       # Daily attendance logs with timestamps
-│   ├── att_20261102.log
+│   ├── att_2026-11-01.log     # Daily attendance logs with timestamps (YYYY-MM-DD)
+│   ├── att_2026-11-02.log
 │   └── ...
 ├── archives/
-│   └── attendance_archive_YYYYMM.tar.gz  # Compressed monthly backups (tar + gzip)
+│   └── attendance_archive_YYYY-MM.tar.gz  # Compressed monthly backups (tar + gzip)
 ├── reports/
-│   ├── attendance_summary_*.txt          # Exported human-readable summary reports
-│   └── attendance_summary_*.csv          # Exported analytical CSV exports
+│   ├── attendance_summary_*.txt           # Exported human-readable summary reports
+│   └── attendance_summary_*.csv           # Exported analytical CSV exports
 ├── scripts/
 │   ├── common.sh              # Constants, colors, validation, and directory initializer
 │   ├── student_ops.sh         # CRUD operations: add, remove, search, list (awk, sed, grep)

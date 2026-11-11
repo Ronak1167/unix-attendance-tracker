@@ -56,13 +56,13 @@ add_student() {
     # Append record
     echo "${roll},${name},${batch},${email}" >> "$MASTER_FILE"
 
-    # Maintain sorted order by Roll No (preserving header)
+    # Maintain sorted order by Roll No (preserving header, removing any empty lines)
     head -n 1 "$MASTER_FILE" > "$MASTER_FILE.tmp"
-    tail -n +2 "$MASTER_FILE" | sort -t',' -k1,1n >> "$MASTER_FILE.tmp"
+    tail -n +2 "$MASTER_FILE" | grep -v '^[[:space:]]*$' | sort -t',' -k1,1n >> "$MASTER_FILE.tmp"
     mv "$MASTER_FILE.tmp" "$MASTER_FILE"
     chmod 600 "$MASTER_FILE" 2>/dev/null || true
 
-    log_success "Student '$name' ($roll) added successfully to Batch $batch."
+    log_success "Student '$name' ($roll) added successfully to Batch $batch at $(get_current_timestamp)."
     return 0
 }
 
@@ -106,15 +106,16 @@ remove_student() {
     # Delete record using sed
     sed -i "/^${roll},/d" "$MASTER_FILE"
 
-    log_success "Student with Roll Number $roll has been removed."
+    log_success "Student with Roll Number $roll has been removed at $(get_current_timestamp)."
     return 0
 }
 
-# List all student records using awk
+# List all student records using awk with aligned borders
 list_students() {
     print_banner "MASTER STUDENT DIRECTORY (JIIT BATCH B2)"
+    sed -i '/^[[:space:]]*$/d' "$MASTER_FILE" 2>/dev/null || true
     local total_count
-    total_count=$(tail -n +2 "$MASTER_FILE" | wc -l)
+    total_count=$(tail -n +2 "$MASTER_FILE" | grep -v '^[[:space:]]*$' | wc -l)
 
     if [[ "$total_count" -eq 0 ]]; then
         log_warn "No student records found in $MASTER_FILE."
@@ -123,15 +124,16 @@ list_students() {
 
     awk -F',' '
     BEGIN {
-        printf "%-5s | %-12s | %-24s | %-7s | %-28s\n", "S.NO", "ROLL NO", "STUDENT NAME", "BATCH", "EMAIL ID"
-        print "------+--------------+--------------------------+---------+------------------------------"
+        sno = 0
+        printf " %-5s | %-12s | %-24s | %-8s | %-28s\n", "S.NO", "ROLL NO", "STUDENT NAME", "BATCH", "EMAIL ID"
+        print "-------+--------------+--------------------------+----------+------------------------------"
     }
-    NR > 1 {
-        printf "%-5d | %-12s | %-24s | %-7s | %-28s\n", (NR - 1), $1, $2, $3, $4
+    NR > 1 && $1 != "" {
+        printf " %-5d | %-12s | %-24s | %-8s | %-28s\n", ++sno, $1, $2, $3, $4
     }
     END {
-        print "------+--------------+--------------------------+---------+------------------------------"
-        printf "Total Registered Students: %d\n", (NR - 1)
+        print "-------+--------------+--------------------------+----------+------------------------------"
+        printf " Total Registered Students: %d\n", sno
     }
     ' "$MASTER_FILE"
 }
@@ -152,7 +154,6 @@ search_student() {
 
     log_info "Searching for records matching: '$query'..."
     
-    # Use grep to find matches, ignoring case
     local matches
     matches=$(grep -i "$query" "$MASTER_FILE" | grep -v "^RollNo,")
 
@@ -163,11 +164,14 @@ search_student() {
 
     echo "$matches" | awk -F',' '
     BEGIN {
-        printf "%-12s | %-24s | %-7s | %-28s\n", "ROLL NO", "STUDENT NAME", "BATCH", "EMAIL ID"
-        print "-------------+--------------------------+---------+------------------------------"
+        printf " %-12s | %-24s | %-8s | %-28s\n", "ROLL NO", "STUDENT NAME", "BATCH", "EMAIL ID"
+        print "--------------+--------------------------+----------+------------------------------"
     }
     {
-        printf "%-12s | %-24s | %-7s | %-28s\n", $1, $2, $3, $4
+        printf " %-12s | %-24s | %-8s | %-28s\n", $1, $2, $3, $4
+    }
+    END {
+        print "--------------+--------------------------+----------+------------------------------"
     }
     '
     return 0
@@ -203,4 +207,3 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         "$@"
     fi
 fi
-

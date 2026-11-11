@@ -35,18 +35,19 @@ trap 'echo -e "\n\n${C_YELLOW}Program interrupted by user. Cleaning up and exiti
 # Initialize directories and master files
 init_system
 
-# Display Project Welcome Banner
+# Display Project Welcome Banner with exact border width and live time
 show_main_header() {
     clear 2>/dev/null || true
-    echo -e "${C_BLUE}================================================================================${C_RESET}"
-    echo -e "${C_BOLD}${C_CYAN}         JAYPEE INSTITUTE OF INFORMATION TECHNOLOGY, NOIDA-62                  ${C_RESET}"
-    echo -e "${C_BOLD}           Department of Computer Science & Engineering and IT                  ${C_RESET}"
-    echo -e "${C_YELLOW}           UNIX-BASED STUDENT ATTENDANCE TRACKER (PBL 2026-2027)                ${C_RESET}"
-    echo -e "${C_BLUE}================================================================================${C_RESET}"
-    echo -e "${C_GRAY}Course: Unix Programming Lab (24B15CS214) | Batch: B2${C_RESET}"
-    echo -e "${C_GRAY}Submitted By: Pragya (121) | Ronak (128) | Rishabh (130) | Shobhit (144)${C_RESET}"
-    echo -e "${C_GRAY}Submitted To: Hema N & Kritika Rohila${C_RESET}"
-    echo -e "${C_BLUE}--------------------------------------------------------------------------------${C_RESET}"
+    print_double_line
+    echo -e "${C_BOLD}${C_CYAN}                  JAYPEE INSTITUTE OF INFORMATION TECHNOLOGY, NOIDA-62                  ${C_RESET}"
+    echo -e "${C_BOLD}                    Department of Computer Science & Engineering and IT                 ${C_RESET}"
+    echo -e "${C_YELLOW}                    UNIX-BASED STUDENT ATTENDANCE TRACKER (PBL 2026-2027)               ${C_RESET}"
+    print_double_line
+    echo -e "${C_GRAY} Course: Unix Programming Lab (24B15CS214) | Batch: B2${C_RESET}"
+    echo -e "${C_GRAY} Submitted By: Pragya (121) | Ronak (128) | Rishabh (130) | Shobhit (144)${C_RESET}"
+    echo -e "${C_GRAY} Submitted To: Prof. Hema N & Kritika Rohila${C_RESET}"
+    echo -e "${C_CYAN} Live System Clock: $(get_current_timestamp) $(date +%Z)${C_RESET}"
+    print_single_line
 }
 
 # Main Application Execution Loop
@@ -62,7 +63,7 @@ main_menu() {
         echo -e "  ${C_GREEN}6.${C_RESET} UNIX Security & Permission Hardening (chmod Audit)"
         echo -e "  ${C_GREEN}7.${C_RESET} Run Complete Automated Test Suite & Self-Diagnostics"
         echo -e "  ${C_RED}8.${C_RESET} Exit System"
-        echo -e "${C_BLUE}--------------------------------------------------------------------------------${C_RESET}"
+        print_single_line
         
         read -rp "Enter choice [1-8]: " main_choice
 
@@ -135,4 +136,3 @@ if [[ "$#" -gt 0 ]]; then
 else
     main_menu
 fi
-

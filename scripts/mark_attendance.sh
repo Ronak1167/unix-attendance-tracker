@@ -4,6 +4,7 @@
 # Course: Unix Programming Lab (24B15CS214) | JIIT Noida-62
 # Project: UNIX-Based Student Attendance Tracker
 # Utilizes UNIX utilities: awk, date, ln, grep, cut, tr
+# Standard Date Format: YYYY-MM-DD (e.g., 2026-11-11)
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -14,13 +15,14 @@ mark_daily_attendance() {
     local target_date="$1"
     local mode="$2"       # "step", "rapid", or "batch_file"
 
+    # Default to real-time current date in YYYY-MM-DD format
     if [[ -z "$target_date" ]]; then
-        target_date="$(date +%Y%m%d)"
+        target_date="$(get_current_date)"
     fi
 
-    # Validate date format (YYYYMMDD)
-    if [[ ! "$target_date" =~ ^[0-9]{8}$ ]]; then
-        log_error "Invalid date format: '$target_date'. Must be YYYYMMDD (e.g., 20261111)."
+    # Validate date format (YYYY-MM-DD)
+    if ! validate_date_format "$target_date"; then
+        log_error "Invalid date format: '$target_date'. Must be YYYY-MM-DD (e.g., $(get_current_date))."
         return 1
     fi
 
@@ -73,7 +75,7 @@ mark_daily_attendance() {
     rm -f "$temp_log"
 
     local current_time
-    current_time="$(date +"%Y-%m-%d %H:%M:%S")"
+    current_time="$(get_current_timestamp)"
 
     if [[ "$mode" == "step" ]]; then
         echo -e "${C_CYAN}Starting Step-by-Step marking (Press Enter for Present [P], or type 'A' for Absent):${C_RESET}\n"
@@ -128,8 +130,7 @@ mark_daily_attendance() {
     # Atomically move temp log to real log
     mv "$temp_log" "$log_file"
 
-    # Create/update symbolic link: data/current_day.log -> logs/att_YYYYMMDD.log
-    # Uses UNIX 'ln -sf' as defined in Synopsis
+    # Create/update symbolic link: data/current_day.log -> logs/att_YYYY-MM-DD.log
     ln -sf "$log_file" "$SYMLINK_FILE"
 
     log_success "Attendance saved to: $log_file"
@@ -140,7 +141,7 @@ mark_daily_attendance() {
     return 0
 }
 
-# Display a single attendance log file in formatted table
+# Display a single attendance log file with precisely aligned borders
 view_attendance_file() {
     local target_file="$1"
     if [[ -z "$target_file" || ! -f "$target_file" ]]; then
@@ -151,7 +152,7 @@ view_attendance_file() {
     local real_path
     real_path="$(readlink -f "$target_file" 2>/dev/null || echo "$target_file")"
     local date_label
-    date_label="$(basename "$real_path" | sed 's/att_//;s/\.log//')"
+    date_label="$(basename "$real_path" | sed -E 's/att_//;s/\.log//')"
 
     print_banner "ATTENDANCE RECORD FOR DATE: $date_label"
 
@@ -159,24 +160,25 @@ view_attendance_file() {
     BEGIN {
         p_count = 0;
         a_count = 0;
-        printf "%-5s | %-12s | %-24s | %-8s | %-19s\n", "S.NO", "ROLL NO", "STUDENT NAME", "STATUS", "TIMESTAMP"
-        print "------+--------------+--------------------------+----------+--------------------"
+        printf " %-5s | %-12s | %-24s | %-10s | %-20s\n", "S.NO", "ROLL NO", "STUDENT NAME", "STATUS", "LOGGED TIMESTAMP"
+        print "-------+--------------+--------------------------+------------+----------------------"
     }
     {
         if ($3 == "P") {
             p_count++;
-            status_str = "[ PRESENT ]";
+            status_str = "PRESENT";
         } else {
             a_count++;
-            status_str = "[ ABSENT  ]";
+            status_str = "ABSENT";
         }
-        printf "%-5d | %-12s | %-24s | %-8s | %-19s\n", NR, $1, $2, status_str, $4
+        printf " %-5d | %-12s | %-24s | %-10s | %-20s\n", NR, $1, $2, status_str, $4
     }
     END {
-        print "------+--------------+--------------------------+----------+--------------------"
+        print "-------+--------------+--------------------------+------------+----------------------"
         total = p_count + a_count;
         pct = (total > 0) ? (p_count / total) * 100 : 0;
-        printf "Session Summary: Total Students: %d | Present: %d | Absent: %d | Turnout: %.2f%%\n", total, p_count, a_count, pct
+        printf " Session Summary: Total: %d | Present: %d | Absent: %d | Turnout: %.2f%%\n", total, p_count, a_count, pct
+        print "-------------------------------------------------------------------------------------"
     }
     ' "$target_file"
 }

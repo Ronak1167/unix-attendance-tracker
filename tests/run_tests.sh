@@ -101,25 +101,25 @@ assert_failure "Confirm student removed from master CSV" \
 echo -e "\n${C_BOLD}SUITE 3: Multi-Session Daily Logging & Symlinks${C_RESET}"
 
 # Create 5 historical test sessions with controlled attendance
-# Session 1: 20261101
-assert_success "Mark Session 1 (20261101) - 2 absentees" \
-    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "20261101" "rapid" "2501030105 2501030139"
+# Session 1: 2026-11-01
+assert_success "Mark Session 1 (2026-11-01) - 2 absentees" \
+    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "2026-11-01" "rapid" "2501030105 2501030139"
 
-# Session 2: 20261102
-assert_success "Mark Session 2 (20261102) - 3 absentees" \
-    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "20261102" "rapid" "2501030105 2501030121 2501030139"
+# Session 2: 2026-11-02
+assert_success "Mark Session 2 (2026-11-02) - 3 absentees" \
+    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "2026-11-02" "rapid" "2501030105 2501030121 2501030139"
 
-# Session 3: 20261103
-assert_success "Mark Session 3 (20261103) - 1 absentee" \
-    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "20261103" "rapid" "2501030130"
+# Session 3: 2026-11-03
+assert_success "Mark Session 3 (2026-11-03) - 1 absentee" \
+    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "2026-11-03" "rapid" "2501030130"
 
-# Session 4: 20261104
-assert_success "Mark Session 4 (20261104) - 2 absentees" \
-    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "20261104" "rapid" "2501030105 2501030139"
+# Session 4: 2026-11-04
+assert_success "Mark Session 4 (2026-11-04) - 2 absentees" \
+    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "2026-11-04" "rapid" "2501030105 2501030139"
 
-# Session 5: 20261105
-assert_success "Mark Session 5 (20261105) - 1 absentee" \
-    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "20261105" "rapid" "2501030139"
+# Session 5: 2026-11-05
+assert_success "Mark Session 5 (2026-11-05) - 1 absentee" \
+    bash "$SCRIPTS_DIR/mark_attendance.sh" mark_daily_attendance "2026-11-05" "rapid" "2501030139"
 
 # Verify symbolic link points to latest session
 assert_success "Verify symbolic link (ln -s) points to active log" \
@@ -192,21 +192,21 @@ assert_success "Verify exported TXT report exists and is non-empty" check_txt_ex
 # ------------------------------------------------------------------------------
 echo -e "\n${C_BOLD}SUITE 6: Archiving & Compression (tar, gzip)${C_RESET}"
 
-# Create archive for 202611
+# Create archive for 2026-11
 assert_success "Create compressed monthly archive (tar -czvf)" \
-    bash "$SCRIPTS_DIR/archive.sh" archive_logs "202611" "keep"
+    bash "$SCRIPTS_DIR/archive.sh" archive_logs "2026-11" "keep"
 
 # Verify archive exists
 assert_success "Verify tar.gz archive file exists" \
-    test -f "$ARCHIVE_DIR/attendance_archive_202611.tar.gz"
+    test -f "$ARCHIVE_DIR/attendance_archive_2026-11.tar.gz"
 
 # Verify archive integrity using tar -tzf
 assert_success "Verify archive integrity with tar -tzf" \
-    tar -tzf "$ARCHIVE_DIR/attendance_archive_202611.tar.gz"
+    tar -tzf "$ARCHIVE_DIR/attendance_archive_2026-11.tar.gz"
 
 # Test archive restoration
 assert_success "Test archive decompression and extraction (tar -xzvf)" \
-    bash "$SCRIPTS_DIR/archive.sh" restore_archive "$ARCHIVE_DIR/attendance_archive_202611.tar.gz"
+    bash "$SCRIPTS_DIR/archive.sh" restore_archive "$ARCHIVE_DIR/attendance_archive_2026-11.tar.gz"
 
 # ------------------------------------------------------------------------------
 # TEST SUITE 7: POSIX Security & Permissions Hardening

@@ -15,7 +15,6 @@ apply_security_policy() {
     print_banner "APPLYING POSIX SECURITY PERMISSIONS (chmod)"
 
     log_info "Hardening master database file ($MASTER_FILE)..."
-    # Owner read/write only (600) prevents other students or unauthorized users from tampering with records
     chmod 600 "$MASTER_FILE" 2>/dev/null || true
 
     log_info "Securing logs, archives, and reports directories (700)..."
@@ -28,15 +27,15 @@ apply_security_policy() {
     chmod 755 "$BASE_DIR/attendance.sh" 2>/dev/null || true
     chmod 755 "$SCRIPTS_DIR"/*.sh 2>/dev/null || true
 
-    log_success "POSIX file security policy applied successfully."
+    log_success "POSIX file security policy applied successfully at $(get_current_timestamp)."
 }
 
-# Audit current file permissions against policy
+# Audit current file permissions against policy with exact border alignment
 audit_permissions() {
     print_banner "SECURITY AUDIT: FILE PERMISSIONS & INTEGRITY"
 
-    printf "%-35s | %-6s | %-12s | %-15s\n", "TARGET FILE / DIRECTORY", "OCTAL", "PERMISSION", "COMPLIANCE"
-    echo "------------------------------------+--------+--------------+----------------"
+    printf " %-35s | %-8s | %-12s | %-16s\n" "TARGET FILE / DIRECTORY" "OCTAL" "PERMISSION" "COMPLIANCE"
+    echo "-------------------------------------+----------+--------------+------------------"
 
     check_target() {
         local path="$1"
@@ -44,7 +43,7 @@ audit_permissions() {
         local label="$3"
 
         if [[ ! -e "$path" ]]; then
-            printf "%-35s | %-6s | %-12s | %-15s\n" "$label" "N/A" "MISSING" "[ FAILED ]"
+            printf " %-35s | %-8s | %-12s | %-16s\n" "$label" "N/A" "MISSING" "[ FAILED ]"
             return
         fi
 
@@ -56,7 +55,6 @@ audit_permissions() {
         local status="[ COMPLIANT ]"
         # On WSL / NTFS mounts, permissions might report 777 if metadata is not enabled
         if [[ "$current_octal" != "$expected_octal" ]]; then
-            # If WSL NTFS mount, notify cleanly
             if [[ "$current_octal" == "777" ]]; then
                 status="[ WSL DRVFS ]"
             else
@@ -64,7 +62,7 @@ audit_permissions() {
             fi
         fi
 
-        printf "%-35s | %-6s | %-12s | %-15s\n" "$label" "$current_octal" "$current_perm" "$status"
+        printf " %-35s | %-8s | %-12s | %-16s\n" "$label" "$current_octal" "$current_perm" "$status"
     }
 
     check_target "$MASTER_FILE" "600" "data/students.csv (Master DB)"
@@ -77,7 +75,7 @@ audit_permissions() {
     check_target "$SCRIPTS_DIR/report_ops.sh" "755" "scripts/report_ops.sh"
     check_target "$SCRIPTS_DIR/archive.sh" "755" "scripts/archive.sh"
 
-    echo "------------------------------------+--------+--------------+----------------"
+    echo "-------------------------------------+----------+--------------+------------------"
     echo -e "${C_CYAN}Security Notes:${C_RESET}"
     echo "  • chmod 600 ensures only the admin/faculty account can read/modify student data."
     echo "  • chmod 700 ensures privacy for log repositories and statistical reports."
@@ -96,7 +94,7 @@ clean_temp_files() {
 
     echo "$temp_files" | awk '{printf "  • Deleting: %s\n", $1}'
     rm -f $temp_files
-    log_success "Cleaned temporary files safely."
+    log_success "Cleaned temporary files safely at $(get_current_timestamp)."
 }
 
 # Security menu
@@ -127,4 +125,3 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         "$@"
     fi
 fi
-

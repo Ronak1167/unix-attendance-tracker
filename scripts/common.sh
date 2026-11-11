@@ -7,7 +7,7 @@
 #          Rishabh Tyagi (2501030130), Shobhit Khatana (2501030144)
 # ==============================================================================
 
-# Determine base directory dynamically based on script location
+# Determine base directory dynamically based on script location (zero hardcoding)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ "$(basename "$SCRIPT_DIR")" == "scripts" || "$(basename "$SCRIPT_DIR")" == "tests" ]]; then
     BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -25,6 +25,9 @@ MASTER_FILE="$DATA_DIR/students.csv"
 SYMLINK_FILE="$DATA_DIR/current_day.log"
 DEFAULT_THRESHOLD=75
 
+# Standard Border Width for Terminals
+BORDER_WIDTH=98
+
 # Color Palettes for Terminal Output
 C_RESET="\033[0m"
 C_BOLD="\033[1m"
@@ -36,29 +39,52 @@ C_MAGENTA="\033[35m"
 C_CYAN="\033[36m"
 C_GRAY="\033[90m"
 
-# Print colored status messages
+# Live timestamp generator (YYYY-MM-DD HH:MM:SS)
+get_current_timestamp() {
+    date +"%Y-%m-%d %H:%M:%S"
+}
+
+get_current_date() {
+    date +"%Y-%m-%d"
+}
+
+get_current_time() {
+    date +"%H:%M:%S"
+}
+
+# Print colored status messages with live ISO timestamps
 log_info() {
-    echo -e "${C_CYAN}[INFO]${C_RESET} $*"
+    echo -e "${C_GRAY}[$(get_current_timestamp)]${C_RESET} ${C_CYAN}[INFO]${C_RESET} $*"
 }
 
 log_success() {
-    echo -e "${C_GREEN}[SUCCESS]${C_RESET} $*"
+    echo -e "${C_GRAY}[$(get_current_timestamp)]${C_RESET} ${C_GREEN}[SUCCESS]${C_RESET} $*"
 }
 
 log_warn() {
-    echo -e "${C_YELLOW}[WARNING]${C_RESET} $*"
+    echo -e "${C_GRAY}[$(get_current_timestamp)]${C_RESET} ${C_YELLOW}[WARNING]${C_RESET} $*"
 }
 
 log_error() {
-    echo -e "${C_RED}[ERROR]${C_RESET} $*" >&2
+    echo -e "${C_GRAY}[$(get_current_timestamp)]${C_RESET} ${C_RED}[ERROR]${C_RESET} $*" >&2
 }
 
-# Print visual header banner
+# Print exact horizontal dividing lines
+print_double_line() {
+    printf "${C_BLUE}%*s${C_RESET}\n" "$BORDER_WIDTH" '' | tr ' ' '='
+}
+
+print_single_line() {
+    printf "${C_BLUE}%*s${C_RESET}\n" "$BORDER_WIDTH" '' | tr ' ' '-'
+}
+
+# Print visual header banner with exact border alignment and live clock
 print_banner() {
     local title="$1"
-    echo -e "${C_BLUE}================================================================================${C_RESET}"
+    print_double_line
     echo -e "${C_BOLD}${C_CYAN}  $title${C_RESET}"
-    echo -e "${C_BLUE}================================================================================${C_RESET}"
+    echo -e "${C_GRAY}  Timestamp: $(get_current_timestamp) | Environment: POSIX Shell${C_RESET}"
+    print_double_line
 }
 
 # Ensure all essential directories and files exist
@@ -80,6 +106,15 @@ validate_roll_number() {
     return 0
 }
 
+validate_date_format() {
+    local dt="$1"
+    # Format must be YYYY-MM-DD
+    if [[ ! "$dt" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+        return 1
+    fi
+    return 0
+}
+
 validate_non_empty() {
     local val="$1"
     if [[ -z "${val// }" ]]; then
@@ -92,4 +127,3 @@ pause_prompt() {
     echo ""
     read -rp "Press [Enter] to continue..." _
 }
-

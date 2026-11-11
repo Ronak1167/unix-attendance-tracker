@@ -57,17 +57,17 @@ generate_student_transcript() {
     awk -F',' -v threshold="$DEFAULT_THRESHOLD" -v report_type="student" -v target_roll="$target_roll" -f "$AWK_SCRIPT" "$MASTER_FILE" "$LOGS_DIR"/att_*.log
 }
 
-# Export Report to Disk (TXT & CSV formats)
+# Export Report to Disk (TXT & CSV formats) with live timestamp
 export_report() {
     local threshold="${1:-$DEFAULT_THRESHOLD}"
     if ! check_logs_exist; then return 1; fi
 
     local timestamp
-    timestamp="$(date +%Y%m%d_%H%M%S)"
+    timestamp="$(date +%Y-%m-%d_%H%M%S)"
     local txt_report="$REPORTS_DIR/attendance_summary_${timestamp}.txt"
     local csv_report="$REPORTS_DIR/attendance_summary_${timestamp}.csv"
 
-    log_info "Generating report files in $REPORTS_DIR..."
+    log_info "Generating report files in $REPORTS_DIR at $(get_current_timestamp)..."
 
     # Generate Human-Readable Formatted Text Report
     awk -F',' -v threshold="$threshold" -v report_type="summary" -f "$AWK_SCRIPT" "$MASTER_FILE" "$LOGS_DIR"/att_*.log > "$txt_report"
@@ -84,20 +84,21 @@ export_report() {
         }
         next
     }
-    FILENAME ~ /att_[0-9]{8}\.log$/ {
+    FILENAME ~ /att_[0-9]{4}-?[0-9]{2}-?[0-9]{2}\.log$/ {
         if ($1 != "" && $3 != "") {
             tot[$1]++;
-            if (toupper($3) == "P") p[$1]++;
+            st = toupper($3)
+            if (st == "P" || st == "PRESENT") p[$1]++;
         }
     }
     END {
-        print "RollNo,Name,Batch,Email,TotalSessions,Attended,Absent,Percentage,Status"
+        print "RollNo,Name,Batch,Email,TotalSessions,Attended,Absent,Percentage,Status,ReportGeneratedAt"
         for (i = 1; i <= n; i++) {
             r = order[i];
             a = tot[r] - p[r];
             pct = (tot[r] > 0) ? (p[r] / tot[r]) * 100 : 0;
             st = (pct >= threshold) ? "ELIGIBLE" : "DEFAULTER";
-            printf "%s,\"%s\",%s,%s,%d,%d,%d,%.2f,%s\n", r, name[r], batch[r], email[r], tot[r], p[r], a, pct, st
+            printf "%s,\"%s\",%s,%s,%d,%d,%d,%.2f,%s,\"%s\"\n", r, name[r], batch[r], email[r], tot[r], p[r], a, pct, st, strftime("%Y-%m-%d %H:%M:%S")
         }
     }
     ' "$MASTER_FILE" "$LOGS_DIR"/att_*.log > "$csv_report"
@@ -143,4 +144,3 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         "$@"
     fi
 fi
-

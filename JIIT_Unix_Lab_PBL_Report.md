@@ -156,13 +156,13 @@ A 35-point automated regression test suite (`tests/run_tests.sh`) was implemente
 | **TC-05** | Reject Non-Numeric Roll No | Roll: `ABC1234` | Rejected by `validate_roll_number` | **PASS** |
 | **TC-06** | Case-Insensitive Search | Search substring `dummy` | Matching record printed via `awk` table | **PASS** |
 | **TC-07** | Remove Student with `sed` | Delete `2501030999` | Line removed; backup file created | **PASS** |
-| **TC-08** | Multi-Session Logging | Mark 5 sessions with absentees | 5 logs created in `logs/att_YYYYMMDD.log` | **PASS** |
+| **TC-08** | Multi-Session Logging | Mark 5 sessions with absentees | 5 logs created in `logs/att_YYYY-MM-DD.log` | **PASS** |
 | **TC-09** | Symbolic Link Resolution | Query `data/current_day.log` | Resolves via `readlink -f` to latest log | **PASS** |
 | **TC-10** | AWK Percentage Precision | Ronak Jain (6/6 sessions) | Evaluated to exact `100.00%`, Status: `ELIGIBLE` | **PASS** |
-| **TC-11** | Defaulter Detection (<75%) | Shivam Kapoor (1/6 sessions) | Evaluated to `16.67%`, Status: `DEFAULTER` | **PASS** |
+| **TC-11** | Defaulter Detection (<75%) | Shivam Kapoor (2/6 sessions) | Evaluated to `33.33%`, Status: `DEFAULTER` | **PASS** |
 | **TC-12** | Individual Transcript Card | Query Roll: `2501030128` | Full date-wise breakdown table displayed | **PASS** |
 | **TC-13** | Analytical Report Export | Run `export_report 75` | TXT summary and CSV generated in `reports/` | **PASS** |
-| **TC-14** | Monthly Archive (tar+gzip) | Target Month: `202611` | `attendance_archive_202611.tar.gz` created | **PASS** |
+| **TC-14** | Monthly Archive (tar+gzip) | Target Month: `2026-11` | `attendance_archive_2026-11.tar.gz` created | **PASS** |
 | **TC-15** | Archive Integrity Check | Test with `tar -tzf` | Return code 0; all archive members listed | **PASS** |
 | **TC-16** | Archive Extraction | Test with `tar -xzvf` | Files restored to `logs/` directory | **PASS** |
 | **TC-17** | POSIX Permission Policy | Execute `apply_security_policy` | Permissions set: `600` for CSV/logs, `700` dirs | **PASS** |
@@ -170,50 +170,51 @@ A 35-point automated regression test suite (`tests/run_tests.sh`) was implemente
 
 #### Sample Terminal Output: Full Attendance Audit Report
 ```
-====================================================================================================
-                  ACADEMIC ATTENDANCE PERFORMANCE AUDIT REPORT (BATCH B2)                           
-====================================================================================================
-S.NO  | ROLL NO      | STUDENT NAME           | TOTAL  | PRES  | ABS   | ATT %   | STATUS      
-------+--------------+------------------------+-------+-------+-------+---------+--------------
-1     | 2501030101   | Aarav Sharma           | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-2     | 2501030105   | Ananya Gupta           | 6      | 2     | 4     |  33.33% | DEFAULTER   
-3     | 2501030112   | Devansh Verma          | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-4     | 2501030118   | Ishaan Saxena          | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-5     | 2501030121   | Pragya Ahlawat         | 6      | 5     | 1     |  83.33% | ELIGIBLE    
-6     | 2501030124   | Rohan Malhotra         | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-7     | 2501030128   | Ronak Jain             | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-8     | 2501030130   | Rishabh Tyagi          | 6      | 5     | 1     |  83.33% | ELIGIBLE    
-9     | 2501030135   | Saanvi Agarwal         | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-10    | 2501030139   | Shivam Kapoor          | 6      | 1     | 5     |  16.67% | DEFAULTER   
-11    | 2501030144   | Shobhit Khatana        | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-12    | 2501030148   | Tanmay Bhatnagar       | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-13    | 2501030152   | Utkarsh Srivastava     | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-14    | 2501030155   | Vanshika Joshi         | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-15    | 2501030160   | Yash Vardhan           | 6      | 6     | 0     | 100.00% | ELIGIBLE    
-------+--------------+------------------------+-------+-------+-------+---------+--------------
+==================================================================================================
+                    ACADEMIC ATTENDANCE PERFORMANCE AUDIT REPORT (BATCH B2)                       
+==================================================================================================
+ S.NO  | ROLL NO      | STUDENT NAME             | TOTAL  | PRES   | ABS    | ATT %    | STATUS      
+-------+--------------+--------------------------+--------+--------+--------+----------+--------------
+ 1     | 2501030101   | Aarav Sharma             | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 2     | 2501030105   | Ananya Gupta             | 6      | 3      | 3      |  50.00%  | DEFAULTER   
+ 3     | 2501030112   | Devansh Verma            | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 4     | 2501030118   | Ishaan Saxena            | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 5     | 2501030121   | Pragya Ahlawat           | 6      | 5      | 1      |  83.33%  | ELIGIBLE    
+ 6     | 2501030124   | Rohan Malhotra           | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 7     | 2501030128   | Ronak Jain               | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 8     | 2501030130   | Rishabh Tyagi            | 6      | 5      | 1      |  83.33%  | ELIGIBLE    
+ 9     | 2501030135   | Saanvi Agarwal           | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 10    | 2501030139   | Shivam Kapoor            | 6      | 2      | 4      |  33.33%  | DEFAULTER   
+ 11    | 2501030144   | Shobhit Khatana          | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 12    | 2501030148   | Tanmay Bhatnagar         | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 13    | 2501030152   | Utkarsh Srivastava       | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 14    | 2501030155   | Vanshika Joshi           | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+ 15    | 2501030160   | Yash Vardhan             | 6      | 6      | 0      | 100.00%  | ELIGIBLE    
+-------+--------------+--------------------------+--------+--------+--------+----------+--------------
 STATISTICAL OVERVIEW:
   • Total Sessions Conducted : 6
   • Total Students Evaluated : 15
-  • Class Average Attendance : 87.78%
+  • Class Average Attendance : 90.00%
   • Attendance Threshold     : 75.0%
   • Number of Defaulters     : 2 (13.3% of class)
   • Highest Attendance       : 100.00%
-  • Lowest Attendance        : 16.67%
-====================================================================================================
+  • Lowest Attendance        : 33.33%
+==================================================================================================
 ```
 
 #### Sample Terminal Output: Defaulters List (< 75%)
 ```
-================================================================================
-           ATTENDANCE DEFAULTERS LIST (STRICTLY BELOW 75.0% CRITERIA)          
-================================================================================
-S.NO  | ROLL NO      | STUDENT NAME           | TOTAL  | PRES  | ABS   | ATT %   | ELIGIBILITY   
-------+--------------+------------------------+-------+-------+-------+---------+---------------
-1     | 2501030105   | Ananya Gupta           | 6      | 2     | 4     |  33.33% | [ DEFAULTER ]
-2     | 2501030139   | Shivam Kapoor          | 6      | 1     | 5     |  16.67% | [ DEFAULTER ]
-------+--------------+------------------------+-------+-------+-------+---------+---------------
-Total Defaulters: 2 out of 15 students (13.3% of class)
-================================================================================
+==================================================================================================
+             ATTENDANCE DEFAULTERS LIST (STRICTLY BELOW 75.0% CRITERIA)                          
+==================================================================================================
+ S.NO  | ROLL NO      | STUDENT NAME             | TOTAL  | PRES   | ABS    | ATT %    | STATUS      
+-------+--------------+--------------------------+--------+--------+--------+----------+--------------
+ 1     | 2501030105   | Ananya Gupta             | 6      | 3      | 3      |  50.00%  | DEFAULTER   
+ 2     | 2501030139   | Shivam Kapoor            | 6      | 2      | 4      |  33.33%  | DEFAULTER   
+-------+--------------+--------------------------+--------+--------+--------+----------+--------------
+ Total Defaulters: 2 out of 15 students (13.3% of class)
+==================================================================================================
+```
 ```
 
 ---
