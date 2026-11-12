@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1450" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #1E293B; }
+      .subtitle { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 14px; fill: #64748B; }
+      .node-text { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #FFFFFF; text-anchor: middle; }
+      .node-subtext { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #E2E8F0; text-anchor: middle; }
+      .edge-label { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #475569; text-anchor: middle; }
+      .box { rx: 10px; ry: 10px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08)); }
+      .arrow { stroke: #64748B; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-dashed { stroke: #94A3B8; stroke-width: 2; stroke-dasharray: 4,4; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
+    </marker>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#6D28D9" />
+    </linearGradient>
+    <linearGradient id="slateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#B91C1C" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#F8FAFC" />
+
+  <!-- Header Section -->
+  <rect x="50" y="30" width="1100" height="90" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.04))" />
+  <text x="600" y="65" text-anchor="middle" class="title">UNIX-BASED STUDENT ATTENDANCE TRACKER</text>
+  <text x="600" y="92" text-anchor="middle" class="subtitle">System Architecture &amp; Operational Flowchart | JIIT Unix Programming Lab (24B15CS214)</text>
+
+  <!-- 1. Start Node -->
+  <rect x="500" y="150" width="200" height="50" rx="25" fill="url(#slateGrad)" />
+  <text x="600" y="180" class="node-text">System Initialization</text>
+  <text x="600" y="193" class="node-subtext">./attendance.sh (Start)</text>
+
+  <!-- Line 1 to Init -->
+  <path d="M 600 200 L 600 240" class="arrow" />
+
+  <!-- 2. System Init Node -->
+  <rect x="475" y="240" width="250" height="60" fill="url(#blueGrad)" class="box" />
+  <text x="600" y="265" class="node-text">Dynamic Environment Init</text>
+  <text x="600" y="285" class="node-subtext">discover paths, create folders, chmod 600/700</text>
+
+  <!-- Line 2 to Mode Decision -->
+  <path d="M 600 300 L 600 340" class="arrow" />
+
+  <!-- 3. Decision Node: Mode -->
+  <polygon points="600,340 730,390 600,440 470,390" fill="url(#amberGrad)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.08))" />
+  <text x="600" y="385" class="node-text">Invocation Mode?</text>
+  <text x="600" y="402" class="node-subtext">CLI Arguments or Menu</text>
+
+  <!-- Branch Left: CLI Mode -->
+  <path d="M 470 390 L 220 390 L 220 460" class="arrow" />
+  <text x="340" y="380" class="edge-label">CLI Flags (--report / --test)</text>
+
+  <rect x="120" y="460" width="200" height="60" fill="url(#purpleGrad)" class="box" />
+  <text x="220" y="485" class="node-text">Headless CLI Dispatcher</text>
+  <text x="220" y="505" class="node-subtext">Direct execute &amp; stdout exit</text>
+
+  <!-- Branch Down: Interactive Menu -->
+  <path d="M 600 440 L 600 480" class="arrow" />
+  <text x="650" y="465" class="edge-label">No Arguments</text>
+
+  <!-- 4. Interactive Menu Node -->
+  <rect x="460" y="480" width="280" height="60" fill="url(#blueGrad)" class="box" />
+  <text x="600" y="505" class="node-text">Interactive Menu Dashboard</text>
+  <text x="600" y="525" class="node-subtext">ANSI Colored Display (Options 1 - 8)</text>
+
+  <!-- Main Routing Connectors -->
+  <path d="M 600 540 L 600 580" class="arrow" />
+  <path d="M 170 580 L 1030 580" stroke="#64748B" stroke-width="2" fill="none" />
+
+  <!-- Vertical lines from horizontal bus -->
+  <path d="M 170 580 L 170 630" class="arrow" />
+  <path d="M 380 580 L 380 630" class="arrow" />
+  <path d="M 600 580 L 600 630" class="arrow" />
+  <path d="M 820 580 L 820 630" class="arrow" />
+  <path d="M 1030 580 L 1030 630" class="arrow" />
+
+  <!-- MODULE 1: Student Record CRUD -->
+  <rect x="75" y="630" width="190" height="90" fill="url(#emeraldGrad)" class="box" />
+  <text x="170" y="655" class="node-text">[2] Student Ops (CRUD)</text>
+  <text x="170" y="675" class="node-subtext">Add / Remove / Search</text>
+  <text x="170" y="695" class="node-subtext">UNIX Tools: awk, sed, grep</text>
+
+  <!-- Sub-flow for Module 1 -->
+  <path d="M 170 720 L 170 760" class="arrow" />
+  <rect x="75" y="760" width="190" height="80" rx="8" fill="#FFFFFF" stroke="#047857" stroke-width="1.5" />
+  <text x="170" y="785" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Data Validation &amp; sed</text>
+  <text x="170" y="805" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• grep -q check duplicate</text>
+  <text x="170" y="820" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• sed -i in-place deletion</text>
+
+  <!-- MODULE 2: Daily Attendance Marking -->
+  <rect x="285" y="630" width="190" height="90" fill="url(#emeraldGrad)" class="box" />
+  <text x="380" y="655" class="node-text">[1] Daily Attendance</text>
+  <text x="380" y="675" class="node-subtext">Rapid / Step-by-Step</text>
+  <text x="380" y="695" class="node-subtext">Format: YYYY-MM-DD</text>
+
+  <!-- Sub-flow for Module 2 -->
+  <path d="M 380 720 L 380 760" class="arrow" />
+  <rect x="285" y="760" width="190" height="80" rx="8" fill="#FFFFFF" stroke="#047857" stroke-width="1.5" />
+  <text x="380" y="785" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Logging &amp; Symlinking</text>
+  <text x="380" y="805" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• Append att_YYYY-MM-DD.log</text>
+  <text x="380" y="820" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• ln -sf data/current_day.log</text>
+
+  <!-- MODULE 3: Analytics & AWK Engine -->
+  <rect x="505" y="630" width="190" height="90" fill="url(#purpleGrad)" class="box" />
+  <text x="600" y="655" class="node-text">[3] Analytics &amp; AWK Engine</text>
+  <text x="600" y="675" class="node-subtext">report_generator.awk</text>
+  <text x="600" y="695" class="node-subtext">% &amp; Defaulter Detection</text>
+
+  <!-- Sub-flow for Module 3 -->
+  <path d="M 600 720 L 600 760" class="arrow" />
+  <rect x="505" y="760" width="190" height="80" rx="8" fill="#FFFFFF" stroke="#6D28D9" stroke-width="1.5" />
+  <text x="600" y="785" font-family="sans-serif" font-size="11" font-weight="bold" fill="#6D28D9" text-anchor="middle">Multi-File Processing</text>
+  <text x="600" y="805" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• students.csv + logs/*.log</text>
+  <text x="600" y="820" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• Flags &lt; 75% as DEFAULTER</text>
+
+  <!-- MODULE 4: Archival & Maintenance -->
+  <rect x="725" y="630" width="190" height="90" fill="url(#emeraldGrad)" class="box" />
+  <text x="820" y="655" class="node-text">[5] Archiving (tar+gzip)</text>
+  <text x="820" y="675" class="node-subtext">Monthly Compression</text>
+  <text x="820" y="695" class="node-subtext">Format: YYYY-MM</text>
+
+  <!-- Sub-flow for Module 4 -->
+  <path d="M 820 720 L 820 760" class="arrow" />
+  <rect x="725" y="760" width="190" height="80" rx="8" fill="#FFFFFF" stroke="#047857" stroke-width="1.5" />
+  <text x="820" y="785" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Backup &amp; Verification</text>
+  <text x="820" y="805" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• tar -czvf monthly archive</text>
+  <text x="820" y="820" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• tar -tzf integrity test</text>
+
+  <!-- MODULE 5: Security & Permissions -->
+  <rect x="935" y="630" width="190" height="90" fill="url(#emeraldGrad)" class="box" />
+  <text x="1030" y="655" class="node-text">[6] Security &amp; Permissions</text>
+  <text x="1030" y="675" class="node-subtext">POSIX Access Control</text>
+  <text x="1030" y="695" class="node-subtext">UNIX Tools: chmod, stat</text>
+
+  <!-- Sub-flow for Module 5 -->
+  <path d="M 1030 720 L 1030 760" class="arrow" />
+  <rect x="935" y="760" width="190" height="80" rx="8" fill="#FFFFFF" stroke="#047857" stroke-width="1.5" />
+  <text x="1030" y="785" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Permission Hardening</text>
+  <text x="1030" y="805" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• chmod 600 (Private DB)</text>
+  <text x="1030" y="820" font-family="sans-serif" font-size="10" fill="#334155" text-anchor="middle">• chmod 700 (Logs/Archives)</text>
+
+  <!-- PERSISTENCE LAYER CONTAINER -->
+  <rect x="50" y="880" width="1100" height="210" rx="14" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="6,6" />
+  <text x="600" y="910" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#334155">DATA PERSISTENCE &amp; FILE SYSTEM REPOSITORY LAYER</text>
+
+  <!-- Store 1: students.csv -->
+  <rect x="80" y="930" width="220" height="75" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.05))" />
+  <text x="190" y="955" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="middle">data/students.csv</text>
+  <text x="190" y="975" font-family="sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Master Student Directory</text>
+  <text x="190" y="990" font-family="sans-serif" font-size="10" fill="#2563EB" text-anchor="middle">Permissions: chmod 600</text>
+
+  <!-- Store 2: logs/att_*.log -->
+  <rect x="330" y="930" width="240" height="75" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.05))" />
+  <text x="450" y="955" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="middle">logs/att_YYYY-MM-DD.log</text>
+  <text x="450" y="975" font-family="sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Daily Session Transactions</text>
+  <text x="450" y="990" font-family="sans-serif" font-size="10" fill="#2563EB" text-anchor="middle">Timestamps: YYYY-MM-DD HH:MM:SS</text>
+
+  <!-- Store 3: current_day.log (symlink) -->
+  <rect x="600" y="930" width="230" height="75" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.05))" />
+  <text x="715" y="955" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="middle">data/current_day.log</text>
+  <text x="715" y="975" font-family="sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Active Session Pointer</text>
+  <text x="715" y="990" font-family="sans-serif" font-size="10" fill="#059669" text-anchor="middle">Symbolic Link: ln -sf</text>
+
+  <!-- Store 4: archives & reports -->
+  <rect x="860" y="930" width="260" height="75" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.05))" />
+  <text x="990" y="955" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="middle">archives/ &amp; reports/</text>
+  <text x="990" y="975" font-family="sans-serif" font-size="11" fill="#64748B" text-anchor="middle">attendance_archive_*.tar.gz</text>
+  <text x="990" y="990" font-family="sans-serif" font-size="10" fill="#7C3AED" text-anchor="middle">Exported CSV &amp; Formatted TXT</text>
+
+  <!-- Connectors from sub-flows to persistence -->
+  <path d="M 170 840 L 170 930" class="arrow" />
+  <path d="M 380 840 L 380 870 L 450 870 L 450 930" class="arrow" />
+  <path d="M 600 840 L 600 870 L 715 870 L 715 930" class="arrow" />
+  <path d="M 820 840 L 820 870 L 990 870 L 990 930" class="arrow" />
+
+  <!-- OUTPUT & REPORTING LAYER -->
+  <rect x="180" y="1120" width="840" height="110" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.06))" />
+  <text x="600" y="1150" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#1E293B">VERIFIED SYSTEM OUTPUTS &amp; ANALYTICAL ARTIFACTS</text>
+
+  <rect x="200" y="1165" width="230" height="45" rx="6" fill="#F8FAFC" stroke="#CBD5E1" />
+  <text x="315" y="1192" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2563EB" text-anchor="middle">Console Audit Table</text>
+
+  <rect x="450" y="1165" width="230" height="45" rx="6" fill="#F8FAFC" stroke="#CBD5E1" />
+  <text x="565" y="1192" font-family="sans-serif" font-size="12" font-weight="bold" fill="#DC2626" text-anchor="middle">Defaulters List (&lt; 75%)</text>
+
+  <rect x="700" y="1165" width="230" height="45" rx="6" fill="#F8FAFC" stroke="#CBD5E1" />
+  <text x="815" y="1192" font-family="sans-serif" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">35-Test Automated Suite</text>
+
+  <!-- Connectors from persistence to outputs -->
+  <path d="M 600 1090 L 600 1120" class="arrow" />
+
+  <!-- Termination Node -->
+  <path d="M 600 1230 L 600 1280" class="arrow" />
+  <rect x="500" y="1280" width="200" height="50" rx="25" fill="url(#redGrad)" />
+  <text x="600" y="1310" class="node-text">Exit System [8]</text>
+  <text x="600" y="1323" class="node-subtext">trap cleanup &amp; session close</text>
+
+  <!-- Connectors from CLI to Exit -->
+  <path d="M 220 520 L 220 1305 L 500 1305" class="arrow-dashed" />
+</svg>
