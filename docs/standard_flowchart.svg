@@ -1,0 +1,456 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1750 1860" width="1750" height="1860">
+  <defs>
+    <style>
+      .main-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 28px; font-weight: 800; fill: #0F172A; text-anchor: middle; }
+      .sub-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .author-info { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 600; fill: #2563EB; text-anchor: middle; }
+      
+      .shape-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; }
+      .shape-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 400; fill: #F1F5F9; text-anchor: middle; }
+      
+      .label-dark { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
+      .desc-dark { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 500; fill: #334155; text-anchor: middle; }
+
+      .edge-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1E293B; }
+      .yes-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 800; fill: #059669; }
+      .no-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 800; fill: #DC2626; }
+
+      .line-arrow { stroke: #475569; stroke-width: 2.2; fill: none; marker-end: url(#arrow); }
+      .line-dashed { stroke: #64748B; stroke-width: 2; stroke-dasharray: 5,4; fill: none; marker-end: url(#arrow); }
+      .return-loop { stroke: #94A3B8; stroke-width: 2; stroke-dasharray: 4,4; fill: none; }
+
+      .legend-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 800; fill: #0F172A; }
+      .legend-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+    </style>
+
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#475569" />
+    </marker>
+    
+    <!-- Gradients -->
+    <linearGradient id="ovalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" /><stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="processBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" /><stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="processEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" /><stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="processPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED" /><stop offset="100%" stop-color="#6D28D9" />
+    </linearGradient>
+    <linearGradient id="decisionAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" /><stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="ioCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" /><stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="storageSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" /><stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+    <linearGradient id="stopRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626" /><stop offset="100%" stop-color="#B91C1C" />
+    </linearGradient>
+    
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Clean Canvas Background -->
+  <rect width="100%" height="100%" fill="#F8FAFC" />
+
+  <!-- HEADER CARD -->
+  <rect x="50" y="30" width="1650" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)" />
+  <text x="875" y="70" class="main-title">UNIX-BASED STUDENT ATTENDANCE TRACKER</text>
+  <text x="875" y="96" class="sub-title">Standard ISO/ANSI Operational Flowchart | Course: Unix Programming Lab (24B15CS214)</text>
+  <text x="875" y="120" class="author-info">Jaypee Institute of Information Technology, Noida-62 | Batch B2 | Pragya (121), Ronak (128), Rishabh (130), Shobhit (144)</text>
+
+  <!-- LEGEND PANEL (STANDARD SHAPES) -->
+  <g transform="translate(1330, 160)">
+    <rect width="370" height="230" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#shadow)" />
+    <text x="185" y="28" text-anchor="middle" class="legend-title">STANDARD FLOWCHART SYMBOLS</text>
+    <line x1="20" y1="38" x2="350" y2="38" stroke="#E2E8F0" stroke-width="1.5" />
+
+    <!-- Oval -->
+    <rect x="25" y="50" width="80" height="26" rx="13" fill="#1E293B" />
+    <text x="65" y="67" class="shape-title" font-size="10">Start / End</text>
+    <text x="120" y="67" class="legend-text">Terminator (Start or Exit)</text>
+
+    <!-- Rectangle -->
+    <rect x="25" y="85" width="80" height="26" rx="3" fill="#2563EB" />
+    <text x="65" y="102" class="shape-title" font-size="10">Process</text>
+    <text x="120" y="102" class="legend-text">Action / Command / Execution</text>
+
+    <!-- Diamond -->
+    <polygon points="65,120 105,133 65,146 25,133" fill="#D97706" />
+    <text x="65" y="137" class="shape-title" font-size="9">Decision</text>
+    <text x="120" y="137" class="legend-text">Rhombus (Conditional Check)</text>
+
+    <!-- Parallelogram -->
+    <polygon points="35,155 105,155 95,181 25,181" fill="#0284C7" />
+    <text x="65" y="172" class="shape-title" font-size="9">Input/Output</text>
+    <text x="120" y="172" class="legend-text">User Input / Displayed Output</text>
+
+    <!-- Cylinder -->
+    <ellipse cx="65" cy="195" rx="35" ry="5" fill="#475569" />
+    <rect x="30" y="195" width="70" height="18" fill="#475569" />
+    <ellipse cx="65" cy="213" rx="35" ry="5" fill="#334155" />
+    <text x="65" y="208" class="shape-title" font-size="9">Data Store</text>
+    <text x="120" y="208" class="legend-text">Database / Flat-File Storage</text>
+  </g>
+
+  <!-- ==================== FLOWCHART NODES ==================== -->
+
+  <!-- 1. START NODE (Oval) -->
+  <rect x="760" y="160" width="230" height="60" rx="30" fill="url(#ovalGrad)" filter="url(#shadow)" />
+  <text x="875" y="188" class="shape-title">START</text>
+  <text x="875" y="206" class="shape-desc">Execute ./attendance.sh</text>
+
+  <!-- Arrow: Start -> System Init -->
+  <path d="M 875 220 L 875 255" class="line-arrow" />
+
+  <!-- 2. ENVIRONMENT INITIALIZATION (Rectangle - Process) -->
+  <rect x="725" y="255" width="300" height="75" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="875" y="280" class="shape-title">Environment Discovery &amp; Init</text>
+  <text x="875" y="300" class="shape-desc">• Discover base dir dynamically (no hardcoding)</text>
+  <text x="875" y="316" class="shape-desc">• Verify / Create data/, logs/, archives/, reports/</text>
+
+  <!-- Arrow: Init -> Check CLI Mode -->
+  <path d="M 875 330 L 875 365" class="line-arrow" />
+
+  <!-- 3. DECISION: CLI ARGUMENTS PASSED? (Diamond / Rhombus) -->
+  <polygon points="875,365 1025,415 875,465 725,415" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="875" y="410" class="shape-title">CLI Flags Passed?</text>
+  <text x="875" y="428" class="shape-desc">($# &gt; 0 check)</text>
+
+  <!-- Branch Left: YES -> CLI Mode -->
+  <path d="M 725 415 L 260 415 L 260 465" class="line-arrow" />
+  <text x="490" y="405" class="yes-text">[YES: --report / --test / --defaulters]</text>
+
+  <!-- CLI Headless Dispatcher (Rectangle - Process) -->
+  <rect x="140" y="465" width="240" height="70" rx="6" fill="url(#processPurple)" filter="url(#shadow)" />
+  <text x="260" y="492" class="shape-title">Headless CLI Dispatcher</text>
+  <text x="260" y="512" class="shape-desc">Execute target script directly</text>
+  <text x="260" y="526" class="shape-desc">(Automated testing / quick viva)</text>
+
+  <!-- CLI Output (Parallelogram - Output) -->
+  <path d="M 260 535 L 260 575" class="line-arrow" />
+  <polygon points="150,575 370,575 350,635 130,635" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="250" y="600" class="shape-title">Render Table / Test Report</text>
+  <text x="250" y="618" class="shape-desc">Print results to stdout &amp; exit</text>
+
+  <!-- Line from CLI Output to Exit -->
+  <path d="M 240 635 L 240 1735 L 745 1735" class="line-dashed" />
+  <text x="230" y="1150" class="edge-text" transform="rotate(-90 230 1150)">Headless CLI Execution Complete -&gt; Route to Exit</text>
+
+  <!-- Branch Down: NO -> Interactive Menu Mode -->
+  <path d="M 875 465 L 875 500" class="line-arrow" />
+  <text x="885" y="485" class="no-text">[NO: Interactive Mode]</text>
+
+  <!-- 4. DISPLAY DASHBOARD (Parallelogram - I/O) -->
+  <polygon points="730,500 1040,500 1000,565 690,565" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="865" y="526" class="shape-title">Display Interactive Dashboard</text>
+  <text x="865" y="546" class="shape-desc">Show Live Clock, Menu Options [1 - 8], &amp; ANSI Colors</text>
+
+  <!-- Arrow: Display -> Read Choice -->
+  <path d="M 865 565 L 865 600" class="line-arrow" />
+
+  <!-- 5. READ USER CHOICE (Parallelogram - Input) -->
+  <polygon points="750,600 1000,600 970,660 720,660" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="860" y="626" class="shape-title">Read User Choice</text>
+  <text x="860" y="644" class="shape-desc">Capture variable: main_choice</text>
+
+  <!-- Arrow: Read Choice -> Evaluate Choice -->
+  <path d="M 860 660 L 860 695" class="line-arrow" />
+
+  <!-- 6. DECISION: MAIN CHOICE SWITCH (Diamond / Rhombus) -->
+  <polygon points="860,695 1040,755 860,815 680,755" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="860" y="750" class="shape-title">Evaluate main_choice?</text>
+  <text x="860" y="768" class="shape-desc">Case switch on values 1 to 8</text>
+
+  <!-- Horizontal Routing Bus -->
+  <path d="M 680 755 L 180 755" stroke="#475569" stroke-width="2" fill="none" />
+  <path d="M 1040 755 L 1580 755" stroke="#475569" stroke-width="2" fill="none" />
+
+  <!-- Drops to each Module -->
+  <path d="M 180 755 L 180 840" class="line-arrow" />
+  <path d="M 530 755 L 530 840" class="line-arrow" />
+  <path d="M 860 815 L 860 840" class="line-arrow" />
+  <path d="M 1220 755 L 1220 840" class="line-arrow" />
+  <path d="M 1580 755 L 1580 840" class="line-arrow" />
+
+  <text x="190" y="800" class="edge-text">[Opt 1]</text>
+  <text x="540" y="800" class="edge-text">[Opt 2]</text>
+  <text x="870" y="830" class="edge-text">[Opt 3]</text>
+  <text x="1230" y="800" class="edge-text">[Opt 5]</text>
+  <text x="1480" y="780" class="edge-text">[Opt 4, 6, 7]</text>
+
+  <!-- ==================== COLUMN 1: DAILY ATTENDANCE (Opt 1) ==================== -->
+  <!-- Parallelogram: Input Date & Mode -->
+  <polygon points="80,840 280,840 260,905 60,905" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="170" y="865" class="shape-title">Input Date &amp; Mode</text>
+  <text x="170" y="883" class="shape-desc">Default: YYYY-MM-DD</text>
+  <text x="170" y="897" class="shape-desc">Mode: Rapid / Step</text>
+
+  <path d="M 170 905 L 170 945" class="line-arrow" />
+
+  <!-- Decision: Log Exists? (Diamond) -->
+  <polygon points="170,945 270,995 170,1045 70,995" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="170" y="990" class="shape-title" font-size="12">Log Exists?</text>
+  <text x="170" y="1006" class="shape-desc">att_YYYY-MM-DD.log</text>
+
+  <path d="M 170 1045 L 170 1085" class="line-arrow" />
+  <text x="175" y="1065" class="no-text">[New / Overwrite]</text>
+
+  <!-- Process: Mark Attendance (Rectangle) -->
+  <rect x="65" y="1085" width="210" height="85" rx="6" fill="url(#processEmerald)" filter="url(#shadow)" />
+  <text x="170" y="1110" class="shape-title">Record Daily Attendance</text>
+  <text x="170" y="1130" class="shape-desc">• Rapid: All P, enter absents</text>
+  <text x="170" y="1146" class="shape-desc">• Step: Read [P/a] per student</text>
+  <text x="170" y="1160" class="shape-desc">• Attach YYYY-MM-DD HH:MM:SS</text>
+
+  <path d="M 170 1170 L 170 1210" class="line-arrow" />
+
+  <!-- Data Store: Daily Log (Cylinder) -->
+  <g transform="translate(65, 1210)">
+    <ellipse cx="105" cy="10" rx="105" ry="10" fill="#64748B" />
+    <rect x="0" y="10" width="210" height="50" fill="#475569" />
+    <ellipse cx="105" cy="60" rx="105" ry="10" fill="#334155" />
+    <text x="105" y="32" class="shape-title" font-size="12">logs/att_YYYY-MM-DD.log</text>
+    <text x="105" y="48" class="shape-desc">Daily Transaction Ledger</text>
+  </g>
+
+  <path d="M 170 1280 L 170 1315" class="line-arrow" />
+
+  <!-- Process: Update Symlink (Rectangle) -->
+  <rect x="65" y="1315" width="210" height="60" rx="6" fill="url(#processEmerald)" filter="url(#shadow)" />
+  <text x="170" y="1340" class="shape-title">Update Symbolic Link</text>
+  <text x="170" y="1358" class="shape-desc">ln -sf logs/att_... data/current_day.log</text>
+
+  <path d="M 170 1375 L 170 1410" class="line-arrow" />
+
+  <!-- Parallelogram: Display Session Summary (Output) -->
+  <polygon points="75,1410 275,1410 255,1470 55,1470" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="165" y="1435" class="shape-title">Display Session Summary</text>
+  <text x="165" y="1453" class="shape-desc">Total, Present, Absent, %</text>
+
+  <!-- Route back to menu -->
+  <path d="M 165 1470 L 165 1520 L 70 1520 L 70 532 L 690 532" class="return-loop" />
+  <text x="80" y="1510" class="edge-text">Return to Main Menu</text>
+
+  <!-- ==================== COLUMN 2: STUDENT MANAGEMENT (Opt 2) ==================== -->
+  <!-- Parallelogram: Input Action -->
+  <polygon points="440,840 640,840 620,905 420,905" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="530" y="865" class="shape-title">Select Student Action</text>
+  <text x="530" y="883" class="shape-desc">1:List 2:Add 3:Search 4:Remove</text>
+
+  <path d="M 530 905 L 530 945" class="line-arrow" />
+
+  <!-- Decision: Operation Type (Diamond) -->
+  <polygon points="530,945 640,995 530,1045 420,995" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="530" y="990" class="shape-title" font-size="12">Action Choice?</text>
+  <text x="530" y="1006" class="shape-desc">Add / Del / List / Search</text>
+
+  <!-- Sub-branch Add: Check Duplicate (Diamond) -->
+  <path d="M 420 995 L 360 995 L 360 1085" class="line-arrow" />
+  <polygon points="360,1085 450,1130 360,1175 270,1130" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="360" y="1125" class="shape-title" font-size="11">Duplicate Roll?</text>
+  <text x="360" y="1140" class="shape-desc">grep -q "^$roll,"</text>
+
+  <path d="M 360 1175 L 360 1215" class="line-arrow" />
+  <text x="370" y="1195" class="no-text">[No]</text>
+  
+  <rect x="260" y="1215" width="200" height="60" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="360" y="1240" class="shape-title">Append &amp; Sort DB</text>
+  <text x="360" y="1258" class="shape-desc">sort -t',' -k1,1n students.csv</text>
+
+  <!-- Sub-branch Remove: sed in-place deletion -->
+  <path d="M 640 995 L 700 995 L 700 1085" class="line-arrow" />
+  <rect x="600" y="1085" width="200" height="65" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="700" y="1110" class="shape-title">Atomic Removal (sed)</text>
+  <text x="700" y="1128" class="shape-desc">Backup students.csv.bak</text>
+  <text x="700" y="1142" class="shape-desc">sed -i '/^$roll,/d'</text>
+
+  <!-- Central Data Store: Master CSV (Cylinder) -->
+  <path d="M 360 1275 L 360 1320 L 460 1320" class="line-arrow" />
+  <path d="M 700 1150 L 700 1320 L 600 1320" class="line-arrow" />
+  <path d="M 530 1045 L 530 1320" class="line-arrow" />
+
+  <g transform="translate(430, 1320)">
+    <ellipse cx="100" cy="10" rx="100" ry="10" fill="#64748B" />
+    <rect x="0" y="10" width="200" height="50" fill="#475569" />
+    <ellipse cx="100" cy="60" rx="100" ry="10" fill="#334155" />
+    <text x="100" y="32" class="shape-title" font-size="12">data/students.csv</text>
+    <text x="100" y="48" class="shape-desc">Master Directory (chmod 600)</text>
+  </g>
+
+  <!-- Parallelogram: Display Table (Output) -->
+  <path d="M 530 1390 L 530 1425" class="line-arrow" />
+  <polygon points="440,1425 640,1425 620,1485 420,1485" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="530" y="1450" class="shape-title">Display Directory Table</text>
+  <text x="530" y="1468" class="shape-desc">Formatted output via awk</text>
+
+  <!-- Route back to menu -->
+  <path d="M 530 1485 L 530 1520 L 70 1520" class="return-loop" />
+
+  <!-- ==================== COLUMN 3: ANALYTICS & AWK ENGINE (Opt 3) ==================== -->
+  <!-- Process: Invoke AWK -->
+  <rect x="750" y="840" width="220" height="75" rx="6" fill="url(#processPurple)" filter="url(#shadow)" />
+  <text x="860" y="865" class="shape-title">Invoke Analytics Engine</text>
+  <text x="860" y="885" class="shape-desc">report_generator.awk</text>
+  <text x="860" y="901" class="shape-desc">Load students.csv + logs/*.log</text>
+
+  <path d="M 860 915 L 860 950" class="line-arrow" />
+
+  <!-- Process: Compute Stats -->
+  <rect x="745" y="950" width="230" height="70" rx="6" fill="url(#processPurple)" filter="url(#shadow)" />
+  <text x="860" y="975" class="shape-title">Multi-Log Cross-Referencing</text>
+  <text x="860" y="995" class="shape-desc">Compute Total, Present, Absent</text>
+  <text x="860" y="1009" class="shape-desc">% = (Attended / Total) * 100</text>
+
+  <path d="M 860 1020 L 860 1055" class="line-arrow" />
+
+  <!-- Decision: Attendance < 75%? (Diamond) -->
+  <polygon points="860,1055 970,1110 860,1165 750,1110" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="860" y="1105" class="shape-title" font-size="12">Attendance &lt; 75%?</text>
+  <text x="860" y="1122" class="shape-desc">(Threshold Evaluation)</text>
+
+  <!-- Branch Left: YES -> Defaulter -->
+  <path d="M 750 1110 L 690 1110 L 690 1195" class="line-arrow" />
+  <text x="700" y="1100" class="yes-text">[YES]</text>
+  <rect x="590" y="1195" width="200" height="55" rx="6" fill="url(#stopRed)" filter="url(#shadow)" />
+  <text x="690" y="1220" class="shape-title">Tag as DEFAULTER</text>
+  <text x="690" y="1238" class="shape-desc">Exam Detention Warning</text>
+
+  <!-- Branch Right: NO -> Eligible -->
+  <path d="M 970 1110 L 1030 1110 L 1030 1195" class="line-arrow" />
+  <text x="980" y="1100" class="no-text">[NO]</text>
+  <rect x="930" y="1195" width="200" height="55" rx="6" fill="url(#processEmerald)" filter="url(#shadow)" />
+  <text x="1030" y="1220" class="shape-title">Tag as ELIGIBLE</text>
+  <text x="1030" y="1238" class="shape-desc">Normal Academic Standing</text>
+
+  <!-- Merge to Parallelogram Display Report -->
+  <path d="M 690 1250 L 690 1290 L 860 1290 L 860 1315" class="line-arrow" />
+  <path d="M 1030 1250 L 1030 1290 L 860 1290" />
+
+  <polygon points="730,1315 1010,1315 970,1380 690,1380" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="850" y="1342" class="shape-title">Render Performance Audit</text>
+  <text x="850" y="1360" class="shape-desc">Display Full Table &amp; Defaulter Alerts</text>
+
+  <path d="M 850 1380 L 850 1415" class="line-arrow" />
+
+  <!-- Process: Export Reports to Disk -->
+  <rect x="740" y="1415" width="220" height="65" rx="6" fill="url(#processPurple)" filter="url(#shadow)" />
+  <text x="850" y="1440" class="shape-title">Export Analytics to Disk</text>
+  <text x="850" y="1458" class="shape-desc">Save reports/*.txt &amp; reports/*.csv</text>
+  <text x="850" y="1472" class="shape-desc">with generation timestamps</text>
+
+  <!-- Route back to menu -->
+  <path d="M 850 1480 L 850 1520 L 70 1520" class="return-loop" />
+
+  <!-- ==================== COLUMN 4: LOG ARCHIVING (Opt 5) ==================== -->
+  <!-- Parallelogram: Input Target Month -->
+  <polygon points="1130,840 1330,840 1310,905 1110,905" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="1220" y="865" class="shape-title">Input Target Month</text>
+  <text x="1220" y="883" class="shape-desc">Format: YYYY-MM</text>
+
+  <path d="M 1220 905 L 1220 945" class="line-arrow" />
+
+  <!-- Decision: Month Logs Found? (Diamond) -->
+  <polygon points="1220,945 1330,995 1220,1045 1110,995" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="1220" y="990" class="shape-title" font-size="12">Logs Found?</text>
+  <text x="1220" y="1006" class="shape-desc">att_YYYY-MM-*.log</text>
+
+  <path d="M 1220 1045 L 1220 1085" class="line-arrow" />
+  <text x="1230" y="1065" class="yes-text">[YES]</text>
+
+  <!-- Process: tar + gzip (Rectangle) -->
+  <rect x="1115" y="1085" width="210" height="75" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="1220" y="1110" class="shape-title">Compress with tar &amp; gzip</text>
+  <text x="1220" y="1130" class="shape-desc">tar -czvf attendance_archive_</text>
+  <text x="1220" y="1146" class="shape-desc">YYYY-MM.tar.gz</text>
+
+  <path d="M 1220 1160 L 1220 1195" class="line-arrow" />
+
+  <!-- Process: Verify Integrity (Rectangle) -->
+  <rect x="1115" y="1195" width="210" height="60" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="1220" y="1220" class="shape-title">Verify Archive Integrity</text>
+  <text x="1220" y="1238" class="shape-desc">tar -tzf (Test table of contents)</text>
+
+  <path d="M 1220 1255 L 1220 1290" class="line-arrow" />
+
+  <!-- Data Store: Archive (Cylinder) -->
+  <g transform="translate(1115, 1290)">
+    <ellipse cx="105" cy="10" rx="105" ry="10" fill="#64748B" />
+    <rect x="0" y="10" width="210" height="50" fill="#475569" />
+    <ellipse cx="105" cy="60" rx="105" ry="10" fill="#334155" />
+    <text x="105" y="32" class="shape-title" font-size="12">archives/*.tar.gz</text>
+    <text x="105" y="48" class="shape-desc">Compressed Monthly Backups</text>
+  </g>
+
+  <path d="M 1220 1360 L 1220 1395" class="line-arrow" />
+
+  <!-- Decision: Purge Originals? (Diamond) -->
+  <polygon points="1220,1395 1320,1440 1220,1485 1120,1440" fill="url(#decisionAmber)" filter="url(#shadow)" />
+  <text x="1220" y="1435" class="shape-title" font-size="11">Purge Raw Logs?</text>
+  <text x="1220" y="1450" class="shape-desc">(Disk optimization)</text>
+
+  <!-- Route back to menu -->
+  <path d="M 1220 1485 L 1220 1520 L 70 1520" class="return-loop" />
+
+  <!-- ==================== COLUMN 5: UTILITIES & TESTING (Opts 4, 6, 7) ==================== -->
+  <!-- Process: Option 4 Active Symlink -->
+  <rect x="1475" y="840" width="210" height="65" rx="6" fill="url(#processEmerald)" filter="url(#shadow)" />
+  <text x="1580" y="865" class="shape-title">[4] Resolve Active Symlink</text>
+  <text x="1580" y="883" class="shape-desc">readlink -f data/current_day.log</text>
+  <text x="1580" y="897" class="shape-desc">Display today's live turnout</text>
+
+  <path d="M 1580 905 L 1580 945" class="line-arrow" />
+
+  <!-- Process: Option 6 Security Hardening -->
+  <rect x="1475" y="945" width="210" height="75" rx="6" fill="url(#processEmerald)" filter="url(#shadow)" />
+  <text x="1580" y="970" class="shape-title">[6] Security &amp; Permissions</text>
+  <text x="1580" y="990" class="shape-desc">Enforce chmod 600 (DB &amp; logs)</text>
+  <text x="1580" y="1006" class="shape-desc">chmod 700 (dirs), 755 (scripts)</text>
+
+  <path d="M 1580 1020 L 1580 1060" class="line-arrow" />
+
+  <!-- Process: Option 7 Automated Test Suite -->
+  <rect x="1475" y="1060" width="210" height="75" rx="6" fill="url(#processPurple)" filter="url(#shadow)" />
+  <text x="1580" y="1085" class="shape-title">[7] Automated Test Suite</text>
+  <text x="1580" y="1105" class="shape-desc">Execute tests/run_tests.sh</text>
+  <text x="1580" y="1121" class="shape-desc">35/35 Regression Test Harness</text>
+
+  <path d="M 1580 1135 L 1580 1175" class="line-arrow" />
+
+  <!-- Parallelogram: Display Compliance & Test Summary -->
+  <polygon points="1490,1175 1690,1175 1670,1235 1470,1235" fill="url(#ioCyan)" filter="url(#shadow)" />
+  <text x="1580" y="1200" class="shape-title">Display Test Summary</text>
+  <text x="1580" y="1218" class="shape-desc">Print PASS / FAIL metrics</text>
+
+  <!-- Route back to menu -->
+  <path d="M 1580 1235 L 1580 1520 L 70 1520" class="return-loop" />
+
+  <!-- ==================== SYSTEM EXIT & SHUTDOWN ==================== -->
+  <!-- Connector from Main Switch Option 8 to Exit -->
+  <path d="M 860 755 L 860 1560 L 860 1600" class="line-arrow" />
+  <text x="870" y="1575" class="edge-text">[Opt 8: Exit System]</text>
+
+  <!-- Process: Signal Trap Cleanup (Rectangle) -->
+  <rect x="735" y="1600" width="250" height="65" rx="6" fill="url(#processBlue)" filter="url(#shadow)" />
+  <text x="860" y="1625" class="shape-title">Signal Trap &amp; Safe Cleanup</text>
+  <text x="860" y="1643" class="shape-desc">trap SIGINT / SIGTERM</text>
+  <text x="860" y="1657" class="shape-desc">Purge temporary files (*.tmp, *.bak)</text>
+
+  <path d="M 860 1665 L 860 1705" class="line-arrow" />
+
+  <!-- Terminator: EXIT / STOP (Oval) -->
+  <rect x="745" y="1705" width="230" height="60" rx="30" fill="url(#stopRed)" filter="url(#shadow)" />
+  <text x="860" y="1733" class="shape-title">STOP / EXIT</text>
+  <text x="860" y="1751" class="shape-desc">Graceful session close (Code 0)</text>
+
+  <!-- Flowchart Footer Note -->
+  <text x="875" y="1810" class="sub-title" font-size="12">Designed for JIIT B.Tech CSE 2nd Year Unix Programming Lab PBL | Fully POSIX Compliant</text>
+</svg>

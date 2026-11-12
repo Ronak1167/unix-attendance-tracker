@@ -66,9 +66,22 @@ unix-attendance-tracker/
 │   └── security.sh            # POSIX permission hardening & audit utility (chmod 600/700/755)
 ├── tests/
 │   └── run_tests.sh           # Automated 35-point regression & verification test harness
+├── docs/
+│   ├── unix_attendance_tracker_flowchart.png  # High-resolution standard flowchart
+│   └── standard_flowchart.svg                 # Vector source with ANSI/ISO shapes
 ├── JIIT_Unix_Lab_PBL_Report.md# Complete 4-Chapter Lab Report matching JIIT format
 └── README.md                  # Comprehensive documentation and viva manual
 ```
+
+### System Architecture & Standard Flowchart
+![System Flowchart](docs/unix_attendance_tracker_flowchart.png)
+
+The project includes an ISO/ANSI compliant flowchart illustrating complete control flow, signal traps, data persistence, and POSIX system calls using standard flowchart shapes:
+- **Oval (Terminators):** Invocations (`./attendance.sh`) and Exit points (`trap` cleanup).
+- **Rectangle (Processes):** Dynamic path discovery, AWK computations, CSV updates via `sed -i`, and `tar -czvf` archival.
+- **Diamond / Rhombus (Decisions):** CLI vs Interactive mode, validation checks, duplicate detection, and threshold branches ($<75\%$).
+- **Parallelogram (Input / Output):** Menu input, student credentials entry, and generated report outputs.
+- **Cylinder (Data Stores):** `data/students.csv`, `logs/att_*.log`, and `archives/*.tar.gz`.
 
 ---
 

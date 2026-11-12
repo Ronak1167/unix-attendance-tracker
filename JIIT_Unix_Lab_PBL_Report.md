@@ -67,121 +67,41 @@ The architecture follows a modular, three-tier command-line pattern consisting o
 2. **Business Logic & Controller Layer:** Modular scripts (`student_ops.sh`, `mark_attendance.sh`, `report_ops.sh`, `archive.sh`, `security.sh`) that encapsulate operational rules and data validation.
 3. **Data Persistence & File System Layer:** Structured CSV files (`data/students.csv`), daily transaction logs (`logs/att_YYYYMMDD.log`), symbolic links (`data/current_day.log`), and compressed tarballs (`archives/attendance_archive_YYYYMM.tar.gz`).
 
-#### System Flowchart Diagram (Figure 1)
+#### System Flowchart Diagram
+![System Architecture & Execution Flowchart](docs/unix_attendance_tracker_flowchart.png)
+*(High-resolution flowchart using standard ANSI/ISO shapes: Oval = Terminator, Rectangle = Process, Diamond/Rhombus = Decision, Parallelogram = Input/Output, Cylinder = Data Storage. Full vector source available in `docs/standard_flowchart.svg`).*
 
-```mermaid
-flowchart TD
-    Start(["System Invocation<br><code>./attendance.sh</code>"]) --> Init["Dynamic Path Discovery &amp;<br>Directory Init (common.sh)"]
-    Init --> ModeChoice{"Invocation<br>Mode?"}
-    
-    ModeChoice -- "CLI Arguments" --> CLIDispatch["Headless CLI Dispatcher<br>(--report / --defaulters / --test)"]
-    ModeChoice -- "Interactive" --> MainMenu["Interactive Menu Dashboard<br>(ANSI 98-Character Interface)"]
-    
-    MainMenu --> Opt1["[1] Mark Daily Attendance<br><code>mark_attendance.sh</code>"]
-    MainMenu --> Opt2["[2] Student Management (CRUD)<br><code>student_ops.sh</code>"]
-    MainMenu --> Opt3["[3] Analytics &amp; Reports<br><code>report_generator.awk</code>"]
-    MainMenu --> Opt4["[4] Inspect Active Session<br>via Soft Link"]
-    MainMenu --> Opt5["[5] Monthly Log Archiving<br><code>archive.sh</code> (tar + gzip)"]
-    MainMenu --> Opt6["[6] Security &amp; Permissions<br><code>security.sh</code> (chmod)"]
-    MainMenu --> Opt7["[7] Automated Test Suite<br><code>tests/run_tests.sh</code>"]
-    MainMenu --> Opt8["[8] Exit System<br>(trap cleanup)"]
-    
-    Opt1 --> MarkLogic["Prompt Date (YYYY-MM-DD)<br>Rapid vs Step-by-Step Mode"]
-    MarkLogic --> LogWrite["Append to Daily Log:<br><code>logs/att_YYYY-MM-DD.log</code>"]
-    LogWrite --> Symlink["Update Active Pointer:<br><code>ln -sf data/current_day.log</code>"]
-    
-    Opt2 --> StudentLogic["Validate Roll &amp; Name<br><code>grep -q</code> duplicate prevention"]
-    StudentLogic --> StudentPersist["Update Master File:<br><code>data/students.csv</code> (sort &amp; sed -i)"]
-    
-    Opt3 --> AwkEngine["Multi-File Reduction:<br><code>students.csv</code> + <code>logs/*.log</code>"]
-    AwkEngine --> CalcEngine["Compute Attendance %<br>Flag &lt; 75% as DEFAULTER"]
-    CalcEngine --> Export["Export Reports:<br>• reports/*.txt (Formatted)<br>• reports/*.csv (Analytical)"]
-    
-    Opt4 --> SymlinkRead["Resolve Pointer via <code>readlink -f</code><br>Display Today's Turnout Table"]
-    
-    Opt5 --> TarCompress["Compress monthly logs:<br><code>tar -czvf attendance_archive_YYYY-MM.tar.gz</code>"]
-    TarCompress --> TarVerify["Integrity Check: <code>tar -tzf</code>"]
-    
-    Opt6 --> PermPolicy["Enforce POSIX Access Control:<br>• chmod 600 (students.csv, logs)<br>• chmod 700 (directories)<br>• chmod 755 (scripts)"]
-    
-    Opt7 --> TestHarness["Execute 35 Regression Tests<br>Verify All 7 Modules"]
-    
-    Symlink --> Persistence[("Data Persistence Layer<br><code>data/</code> | <code>logs/</code> | <code>archives/</code>")]
-    StudentPersist --> Persistence
-    Export --> Persistence
-    TarVerify --> Persistence
-    PermPolicy --> Persistence
-    
-    Persistence --> Results["Formatted Outputs, Defaulter Alerts &amp; Verified Integrity"]
-    Results --> Opt8
-    CLIDispatch --> Opt8
-    Opt8 --> EndNode(["System Terminated Safely"])
 ```
-
-#### Detailed Text-Mode Flowchart (For Word & Printed Lab Files)
-```text
-+--------------------------------------------------------------------------------------------------+
-|                                    START: ./attendance.sh                                        |
-+--------------------------------------------------------------------------------------------------+
-                                                 |
-                                                 v
-+--------------------------------------------------------------------------------------------------+
-|               DYNAMIC ENVIRONMENT INITIALIZATION & DIRECTORY DISCOVERY (common.sh)                |
-|                    (Discovers root path, verifies data/, logs/, archives/, reports/)             |
-+--------------------------------------------------------------------------------------------------+
-                                                 |
-                                                 v
-                                   /---------------------------\
-                                  <   Command-Line Arguments?   >
-                                   \---------------------------/
-                                      /                     \
-                      YES (--report/--test)               NO (Interactive)
-                                    /                         \
-                                   v                           v
-+----------------------------------------+  +------------------------------------------------------+
-|        HEADLESS CLI DISPATCHER         |  |             MAIN MENU DASHBOARD (98-Char ANSI)       |
-| (Direct stdout execution of requested) |  |   [1] Mark Daily   [2] Student Ops   [3] Reports     |
-| (flag, e.g. --defaulters or --report)  |  |   [4] Symlink Log  [5] Archive       [6] Security    |
-+----------------------------------------+  |   [7] Test Suite   [8] Exit System                   |
-                    |                       +------------------------------------------------------+
-                    |                                                  |
-                    |   +-----------------------+----------------------+-----------------------+
-                    |   |                       |                      |                       |
-                    v   v                       v                      v                       v
-     +---------------------+ +--------------------+ +--------------------+ +--------------------+
-     | [1] DAILY ATTENDANCE| | [2] STUDENT OPS    | | [3] AWK ANALYTICS  | | [5] LOG ARCHIVING  |
-     | • Validates Date    | | • Validates Roll No| | • Passes master CSV| | • Groups by month  |
-     |   (YYYY-MM-DD)      | | • Checks duplicates| |   and all daily logs|   (YYYY-MM)        |
-     | • Rapid / Step mode | |   using grep -q    | | • Calculates Total | | • tar -czvf monthly|
-     | • Writes timestamp  | | • In-place deletion| |   Classes, Attended|   archive.tar.gz   |
-     |   to daily log:     | |   using sed -i     | | • Calculates exact | | • Integrity test   |
-     |   logs/att_*.log    | | • Numerical sort   | |   % & flags < 75%  |   using tar -tzf   |
-     | • Updates symlink   | |   maintains master | | • Generates        | | • Full restore via |
-     |   data/current_day  | |   data/students.csv| |   reports/*.csv    |   tar -xzvf        |
-     +---------------------+ +--------------------+ +--------------------+ +--------------------+
-                |                       |                      |                       |
-                +-----------------------+----------------------+-----------------------+
-                                                 |
-                                                 v
-+--------------------------------------------------------------------------------------------------+
-|                              DATA PERSISTENCE & ACCESS CONTROL LAYER                             |
-|  • data/students.csv (chmod 600)          • logs/att_YYYY-MM-DD.log (chmod 600)                  |
-|  • data/current_day.log (symlink ln -sf)  • archives/attendance_archive_YYYY-MM.tar.gz (700)     |
-+--------------------------------------------------------------------------------------------------+
-                                                 |
-                                                 v
-+--------------------------------------------------------------------------------------------------+
-|                               VERIFIED SYSTEM OUTPUTS & TRANSCRIPTS                              |
-|  • Full Academic Audit Table              • Defaulters List (< 75% Attendance)                   |
-|  • Individual Student Transcript Card     • 35-Point Automated Regression Suite (100% Pass)      |
-+--------------------------------------------------------------------------------------------------+
-                                                 |
-                                                 v
-+--------------------------------------------------------------------------------------------------+
-|                                    EXIT: Graceful Session Termination                            |
-+--------------------------------------------------------------------------------------------------+
+                                 +-------------------------+
+                                 |   System Startup /      |
+                                 |      attendance.sh      |
+                                 +-------------------------+
+                                              |
+                                              v
+                                 +-------------------------+
+                                 |  Main Interactive Menu  |
+                                 +-------------------------+
+                                              |
+         +-----------------+------------------+------------------+-----------------+
+         |                 |                  |                  |                 |
+         v                 v                  v                  v                 v
+   [ 1. Daily Mark ] [ 2. Student CRUD ] [ 3. Analytics ]  [ 4. Symlink ]    [ 5. Archive ]
+         |                 |                  |                  |                 |
+  Choose Mode        Add/Del/Search     Run AWK Engine       Inspect Active     Compress with
+  (Rapid / Step)     Validate Inputs    Multi-Log Eval       Session Log        tar -czvf
+         |                 |                  |                  |                 |
+  Append to log      Modify CSV with    Compute % &          Read symlink via   Verify with
+  att_YYYY-MM-DD.log sed -i & grep      Flag < 75%           readlink -f        tar -tzf
+         |                 |                  |                  |                 |
+  Update Symlink     Update Master      Export CSV / TXT     Display Table      Purge Old Logs
+  (ln -sf)           (chmod 600)        to reports/          to Console         (Optional)
+         +-----------------+------------------+------------------+-----------------+
+                                              |
+                                              v
+                                 +-------------------------+
+                                 |  Security Audit / Exit  |
+                                 +-------------------------+
 ```
-*(High-resolution vector SVG available in `docs/system_flowchart.svg`; interactive HTML viewer in `docs/flowchart.html`)*
 
 ### 2.2 Tool and Technique Selection
 
